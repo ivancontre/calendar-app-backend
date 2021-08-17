@@ -1,13 +1,23 @@
 import express, { Application } from 'express';
-require('dotenv').config({ path: __dirname+'/.env.development' });
+import cors from 'cors';
+import { dbConnection } from './database/config';
+import 'dotenv/config';
 
 // Crear el server de express
 const app: Application = express();
 
+// Database
+dbConnection();
+
+//CORS
+app.use(cors());
+
 // Lectura y parse del body
 app.use(express.json());
 
-app.use('/api/auth', require('./routes/auth'));
+//app.use('/api/auth', require('./routes/auth'));
+
+app.use('/api/calendar-event', require('./routes/calendarEvent'));
 
 // Directorio público
 app.use(express.static('public'));
