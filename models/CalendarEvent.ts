@@ -20,8 +20,19 @@ const schema = new Schema<CalendarEvent>({
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: false
     }
 });
+
+schema.methods.toJSON = function() {
+
+    const {__v, _id, ...object} = this.toObject();
+    object.id = _id;
+    return object;
+    
+}
+
+
 
 export const CalendarEventModel = model<CalendarEvent>('CalendarEvent', schema);

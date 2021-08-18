@@ -1,4 +1,5 @@
 import { Request, Response} from 'express';
+import { CalendarEventModel } from '../models/CalendarEvent';
 
 interface Json {
     ok: boolean;
@@ -24,12 +25,28 @@ export const getCalendarEvents = async (req: Request, res: Response): Promise<Cu
 export const createCalendarEvent = async (req: Request, res: Response): Promise<CustomResponse> => {
 
 
-    console.log(req.body)
+    const calendarEvent = new CalendarEventModel(req.body);
 
-    return res.json({
-        ok: true,
-        msg: 'createCalendarEvent'    
-    });
+    try {
+        calendarEvent.user = req.body.uid;
+
+        await calendarEvent.save();
+
+        return res.status(201).json({
+            ok: true,
+            body: {
+                calendarEvent
+            }
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Por favor hable con el administrador'
+        });
+    }
+
 };
 
 export const updateCalendarEvent = async (req: Request, res: Response): Promise<CustomResponse> => {
