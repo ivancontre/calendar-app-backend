@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response} from 'express';
 import { JwtPayload, verify } from 'jsonwebtoken';
+import { UserModel } from '../models/User';
 
-export const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
+export const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
 
     // x-token viene en el header
 
@@ -17,12 +18,15 @@ export const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
     try {
 
         const payload: JwtPayload = verify(token, process.env.SECRET_JWT_SEED as string) as JwtPayload;
+        
         const {uid, name} = payload;
+
+        const user = await UserModel.findOne({ _id: uid }).select({ "email": 1, "_id": 0});
         
         // es se pasará por next a la siguiente funcion
         req.body.uid = uid;
-        req.body.name = name;    
-
+        req.body.name = name;   
+        req.body.email = user ? user.email : undefined;
         
     } catch (error) {
         console.log(error);

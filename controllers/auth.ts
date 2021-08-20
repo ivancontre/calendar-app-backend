@@ -48,7 +48,8 @@ export const loginUser = async (req: Request, res: Response): Promise<CustomResp
             ok: true,
             body: {
                 uid: userExists.id,
-                name: userExists.name
+                name: userExists.name,
+                email: userExists.email
             },
             token      
         });
@@ -95,13 +96,13 @@ export const registerUser = async (req: Request, res: Response): Promise<CustomR
             ok: true,
             body: {
                 uid: user.id,
-                name: user.name
+                name: user.name,
+                email: user.email
             },
             token           
         });
 
     } catch (error) {
-
         console.log(error);
         return res.status(500).json({
             ok: false,
@@ -113,7 +114,7 @@ export const registerUser = async (req: Request, res: Response): Promise<CustomR
 
 export const renewToken = async (req: Request, res: Response): Promise<CustomResponse> => {
 
-    const {uid, name} = req.body;
+    const {uid, name, email} = req.body;
 
     try {
         // Generar nuestro JWT
@@ -121,7 +122,12 @@ export const renewToken = async (req: Request, res: Response): Promise<CustomRes
 
         return res.json({
             ok: true,
-            token
+            token,
+            body: {
+                uid, 
+                name, 
+                email
+            }            
         });
 
     } catch (error) {
