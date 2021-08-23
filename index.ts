@@ -19,6 +19,8 @@ app.use('/api/auth', require('./routes/auth'));
 
 app.use('/api/calendar-event', require('./routes/calendarEvent'));
 
+app.use('/api/user', require('./routes/user'));
+
 // Directorio público
 app.use(express.static('public'));
 

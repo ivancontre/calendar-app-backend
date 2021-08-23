@@ -96,7 +96,7 @@ export const registerUser = async (req: Request, res: Response): Promise<CustomR
             ok: true,
             body: {
                 uid: user.id,
-                name: user.name,
+                name: user.name.charAt(0).toUpperCase() + user.name.slice(1),
                 email: user.email
             },
             token           

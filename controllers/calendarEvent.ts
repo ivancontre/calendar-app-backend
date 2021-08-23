@@ -81,7 +81,7 @@ export const updateCalendarEvent = async (req: Request, res: Response): Promise<
         if (calendarEvent.user.toString() !== uid) {
             return res.status(401).json({
                 ok: false,
-                msg: 'No tiene prvilegio para editar el CalendarEvent'
+                msg: 'No tiene privilegio para editar el evento del calendario'
             });
         }
 
@@ -128,7 +128,7 @@ export const deleteCalendarEvent = async (req: Request, res: Response): Promise<
         if (calendarEvent.user.toString() !== uid) {
             return res.status(401).json({
                 ok: false,
-                msg: 'No tiene prvilegio para eliminar el CalendarEvent'
+                msg: 'No tiene privilegio para eliminar el evento del calendario'
             });
         }
 
