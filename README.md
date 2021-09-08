@@ -4,6 +4,7 @@ Está creada en base:
 
 * NodeJS
 * Typescript
+* BcryptJS
 * Express
 * MongoDB
 * Autenticación con JWT
